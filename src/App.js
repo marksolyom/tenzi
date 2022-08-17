@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import {nanoid} from "nanoid"
 import Die from "./components/Die"
 
 export default function App() {
@@ -8,7 +9,11 @@ export default function App() {
   function newDice() {
     const diceArr = [];
     for(let i=0; i<10; i++) {
-      diceArr.push(Math.floor(Math.random()*6+1));
+      diceArr.push({
+        id: nanoid(),
+        value: Math.floor(Math.random()*6+1), 
+        isHeld: false,
+      })
     }
     return diceArr;
   }
@@ -17,11 +22,13 @@ export default function App() {
     setDice(newDice())
   }
 
+  console.log(dice)
+
   return (
     <div className="App">
       <main>
         <div className="dice-container">
-          {dice.map(die => <Die value={die} />)}
+          {dice.map(die => <Die key={die.id} value={die.value} isHeld={die.isHeld} />)}
         </div>
         <button className="roll-btn" onClick={rollDice}>Roll</button>
       </main>
