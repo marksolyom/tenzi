@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Die from "./components/Die";
+import Counter from "./components/Counter";
 import { nanoid } from "nanoid";
 import Confetti from 'react-confetti'
 
@@ -7,16 +8,27 @@ export default function App() {
 
   const [dice, setDice] = useState(allNewDice());
   const [tenzi, setTenzi] = useState(false);
+  const [rollCounter, setRollCounter] = useState(1);
+  const [record, setRecord] = useState(JSON.parse(localStorage.getItem("record") || [1000]))
 
   useEffect(() => {
     const allHeld = dice.every(die => die.isHeld);
     const firstValue = dice[0].value;
     const allSameValue = dice.every(die => die.value === firstValue);
     if (allHeld && allSameValue) {
-        setTenzi(true)
-        console.log("You won!")
+      setTenzi(true);
+      saveRecord();
     }
-}, [dice])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dice])
+
+  function saveRecord() {
+    if (rollCounter < record) {
+      localStorage.setItem("record", JSON.stringify(rollCounter))
+      setRecord((JSON.parse(localStorage.getItem("record"))))
+    }
+
+  }
 
   function genNewDie() {
     return {
@@ -35,14 +47,16 @@ export default function App() {
   }
 
   function rollDice() {
+    setRollCounter(prevRollCounter => prevRollCounter + 1);
     if (!tenzi) {
-    setDice(prevDice => prevDice.map(die => {
-      return die.isHeld ? die : genNewDie();
-    }));
-  } else {
-    setTenzi(false);
-    setDice(allNewDice)
-  }
+      setDice(prevDice => prevDice.map(die => {
+        return die.isHeld ? die : genNewDie();
+      }));
+    } else {
+      setTenzi(false);
+      setRollCounter(1);
+      setDice(allNewDice);
+    }
   }
 
   function holdDice(id) {
@@ -58,7 +72,7 @@ export default function App() {
       <main>
         {tenzi && <Confetti />}
         <h1 className="title">Tenzi</h1>
-        <p className="instructions">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
+        <p className="instructions">Roll until all dice are the same. Click each die to hold it between rolls.</p>
         <div className="dice-container">
           {dice.map(die =>
             <Die
@@ -72,6 +86,7 @@ export default function App() {
           className="roll-btn"
           onClick={rollDice}>{tenzi ? "New Game" : "Roll"}
         </button>
+        <Counter counter={rollCounter} record={record} />
       </main>
     </div>
   );
