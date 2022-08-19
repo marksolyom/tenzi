@@ -58,18 +58,6 @@ main {
   margin-bottom: 20px;
 }
 
-.die {
-  height: 60px;
-  width: 60px;
-  cursor: pointer;
-  border-radius: 10px;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.8rem;
-}
-
 .roll-btn {
   background-color: #0061bb;
   border: none;
@@ -86,4 +74,55 @@ main {
 
 .roll-btn:active {
   transform: scale(0.95);
+}
+
+.die {
+  height: 60px;
+  width: 60px;
+  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.5);
+  padding: 5px;
+  font-size: 1.8rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-areas:
+  "a . c"
+  "e g f"
+  "d . b";
+}
+
+.dot {
+    display: block;
+       width: 12px;
+       height: 12px;
+       border-radius: 50%;
+       background-color: black;
+       align-self: center;
+       justify-self: center;
+}
+
+.dot:nth-child(2) {
+  grid-area: b;
+}
+
+.dot:nth-child(3) {
+  grid-area: c;
+}
+
+.dot:nth-child(4) {
+  grid-area: d;
+}
+
+.dot:nth-child(5) {
+  grid-area: e;
+}
+
+.dot:nth-child(6) {
+  grid-area: f;
+}
+
+.dot:nth-child(odd):last-child {
+  grid-area: g;
 }
