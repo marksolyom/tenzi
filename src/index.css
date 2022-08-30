@@ -13,17 +13,18 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: rgb(200, 200, 200);
+  background-color: #0061bb;
 }
-
+/*
 .App {
   height: 650px;
-  width: 500px;
+  width: 480px;
   background-color: #0061bb;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+*/
 
 main {
   border-radius: 10px;
@@ -134,4 +135,55 @@ main {
 .counter p {
   margin: 0 0 30px 0;
   text-align: center;
+}
+
+@media screen and (max-width: 480px) {
+  main {
+    width: 400px;
+  }
+  .dice-container {
+    gap: 18px;
+  }
+  .die {
+    height: 55px;
+    width: 55px;
+  }
+  .dot {
+       width: 11px;
+       height: 11px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  main {
+    width: 320px;
+  }
+  .dice-container {
+    gap: 15px;
+  }
+  .die {
+    height: 50px;
+    width: 50px;
+  }
+  .dot {
+    width: 10px;
+    height: 10px;
+}
+}
+
+@media screen and (max-width: 320px) {
+  main {
+    width: 300px;
+  }
+  .dice-container {
+    gap: 14px;
+  }
+  .die {
+    height: 45px;
+    width: 45px;
+  }
+  .dot {
+    width: 9px;
+    height: 9px;
+}
 }
